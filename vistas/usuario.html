@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuario</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="css/Style.css">
+</head>
+<body id="cuerpoU">
+    <button id="btncerrar">Cerrar Sesion</button>
+    <h1>Hola <span id="nombreUsuario"></span>, Bienvenido!</h1>
+    <div id="contendor_todo"><button id="s_disponibles">Servicios disponibles</button>
+        <div id="contenedor_servicios">
+            <form id="formularioSeleccionServicio">
+                <ul id="lista-servicios"></ul>
+                
+                <input type="datetime-local" id="fechahora" name="fechahora">
+    
+                <button type="submit">Guardar</button>
+            </form>
+            
+            <div id="contendor_solicitudes">
+                <button id="mostrarservicios">Mostrar servicios</button>
+                <ul id="mostrarserviciosusuario"></ul>
+                <input id="eliminarsoli" type="button" value="Eliminar">
+            </div>
+            
+            
+            
+        </div></div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const xhrnombreusu = new XMLHttpRequest();
+            xhrnombreusu.open('post','/imprimir-usuario',true);
+            xhrnombreusu.onreadystatechange=function(){
+                if(xhrnombreusu.readyState===4){
+                    if(xhrnombreusu.status === 200){
+                        const usuario = JSON.parse(xhrnombreusu.responseText);
+                        document.getElementById('nombreUsuario').textContent = usuario.nombre;
+                    }
+                    else{
+                        console.error('Error al entrar al servidor');
+                    }
+                }
+            };
+            xhrnombreusu.send();
+
+            const contenedor_servicios= document.getElementById('contenedor_servicios');
+            const formularioSeleccionServicio = document.getElementById('formularioSeleccionServicio');
+            const s_disponibles = document.getElementById ('s_disponibles');
+            const mostrarservicios = document.getElementById('mostrarservicios');
+            const listaservicios= document.getElementById('lista-servicios');
+            const mostrarserviciosusuario = document.getElementById('mostrarserviciosusuario');
+            const eliminarsoli = document.getElementById('eliminarsoli');
+            s_disponibles.addEventListener('click', ()=>{
+                const xhr = new XMLHttpRequest();
+                xhr.open('post','/obtener-servicios-usuario', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4){
+                        if(xhr.status===200){
+                            const data=JSON.parse(xhr.responseText);
+                            listaservicios.innerHTML=data.
+                            servicio.map(servicio=>`
+                            <li><label><input type="checkbox"
+                            name="servicios" value="${servicio}">${servicio}</label></li>
+                            `).join('');
+                            contenedor_servicios.style.display='inline';
+
+                        }else{
+                            console.error('error al obtener servicio')
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify());
+            })
+            formularioSeleccionServicio.addEventListener('submit', async (event)=>{
+                event.preventDefault();
+
+                const servicioselec= Array.from(formularioSeleccionServicio.elements['servicios'])
+                .filter(checkbox=>checkbox.checked)
+                .map(checkbox=>checkbox.value);
+                const fechahora = formularioSeleccionServicio.elements['fechahora'].value;
+                const xhrguardado = new XMLHttpRequest();
+                xhrguardado.open('post','/guardar-servicios-usuario', true);
+                xhrguardado.setRequestHeader('Content-Type', 'application/json');
+                xhrguardado.onreadystatechange=function(){
+                    if(xhrguardado.readyState===4){
+                        if(xhrguardado.status===200){
+                            alert("Datos guardados")
+                        }else{
+                            console.error('error al guardar servicios del usuario')
+                        }
+                    }
+                };
+                xhrguardado.send(JSON.stringify({
+                     servicios: servicioselec,
+                     fechahora: fechahora
+                    }));
+            })
+            mostrarservicios.addEventListener('click', ()=>{
+                const xhrmostrar = new XMLHttpRequest();
+                xhrmostrar.open('post','/mostrar-servicios-usuario', true);
+                xhrmostrar.setRequestHeader('Content-Type', 'application/json');
+                xhrmostrar.onreadystatechange=function(){
+                    if(xhrmostrar.readyState===4){
+                        if(xhrmostrar.status===200){
+                            const data=JSON.parse(xhrmostrar.responseText);
+                            mostrarserviciosusuario.innerHTML=data.
+                            solicitude.map(solicitude=>`
+                            <li><input type="checkbox" value="${solicitude}">${solicitude[0]} ${solicitude[1]}</li>
+                            `).join('');
+                            contenedor_servicios.style.display='inline';
+
+                        }else{
+                            console.error('error al mostrar servicio')
+                        }
+                    }
+                };
+                xhrmostrar.send(JSON.stringify());
+            });
+            eliminarsoli.addEventListener('click', async (event)=>{
+                event.preventDefault();
+                const solicitudes = Array.from(mostrarserviciosusuario.querySelectorAll('li input[type="checkbox"]')).filter(checkbox=>checkbox.checked).map(checkbox=>checkbox.value);
+                const xhreliminar = new XMLHttpRequest();
+                xhreliminar.open('post','/eliminar-servicios-usuario', true);
+                xhreliminar.setRequestHeader('Content-Type', 'application/json');
+                xhreliminar.onreadystatechange=function(){
+                    if(xhreliminar.readyState===4){
+                        if(xhreliminar.status===200){
+                            console.log('Solicitud eliminada')
+
+                        }else{
+                            console.error('error al borrar solicitud')
+                        }
+                    }
+                };
+                xhreliminar.send(JSON.stringify({solicitudes: solicitudes}));
+            });
+            const btncerrar = document.getElementById('btncerrar');
+        btncerrar.addEventListener('click',()=>{
+            const xhrcerrar = new XMLHttpRequest();
+            xhrcerrar.open('POST','/cerrar-sesion', true);
+            xhrcerrar.onreadystatechange=function(){
+                if(xhrcerrar.readyState===4 && xhrcerrar.status ===200){
+                    window.location.href ='/vistas/index.html';
+                }else{
+                    console.error("Error al cerrar sesion");
+                }
+            }
+            xhrcerrar.send();
+        })
+        window.onload=function(){
+            window.history.forward();
+        };
+        window.onpageshow=function(hola){
+            if(hola.persisted){
+                window.location.reload();
+            }
+        }
+
+        
+        });
+       
+
+    </script>
+
+ <!--  <script>
+        document.getElementById('nombreUsuario')
+        .innerText=getParameterByName('usuario');
+        function getParameterByName(name){
+            const url= new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+    </script>--> 
+
+
+</body>
+</html>

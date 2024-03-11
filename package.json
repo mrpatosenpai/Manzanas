@@ -1,0 +1,24 @@
+{
+  "name": "cosas",
+  "version": "1.0.0",
+  "description": "manzanas",
+  "main": "index.js",
+  "scripts": {
+    "test": "dev",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Juan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

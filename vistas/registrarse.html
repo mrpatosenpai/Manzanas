@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+    
+    <div id="contendor_todo1"> <div id="contenedor2"
+        ><h1>Ingrese sus datos</h1></div>
+    <form action="http://localhost:3000/crear" method="post">
+       <label id="tipo_documento" for="tipo_documento">Tipo de documento:</label>
+       <select name="tipo_documento" id="tipo_documento" required>
+           <option value="cedula">Cédula de ciudadanía</option>
+           <option value="extranjera">Cédula extranjera</option>
+           <option value="tarjetaidentidad">Tarjeta de identidad</option>
+       </select>
+       <label for="nombre">Nombre:</label>
+       <input type="text" id="nombre" name="nombre" required> 
+
+       <br>
+
+        <label for="documento">Número de Documento:</label>
+        <input type="text" id="documento" name="documento" required>
+
+
+        <br>
+        <label for="id_M1">Manzan</label>
+        <select name="id_M1" id="MANE">
+            <option value="1">Bosa</option>
+            <option value="2">Suba</option>
+            <option value="3">Chapinero</option>
+        </select>
+        <div id="contenedor3">
+           <a id="regreso" href="index.html">Atras</a>
+           <input type="submit" value="Registrarse">
+        </div>
+        
+    </form></div>
+        
+ 
+ </body>
+</html>

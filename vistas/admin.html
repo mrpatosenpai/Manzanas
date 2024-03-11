@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+    <button id="btncerrar">Cerrar Sesion</button>
+    <h1>Hola <span id="administrador"></span>, Bienvenido</h1>
+    <div id="contendor_todo2">
+        <div id="contenedor_usuarios">
+            <h2 id="titulo1">Administrar usuarios</h2>
+            <button id="usuariosregis">Usuarios registrados</button>
+            <ul id="lista_usuarios"></ul>
+    
+        </div>
+        <div id="contendor_manzanas">
+            <h2 id="titulo1">Administrar manzanas</h2>
+            <form action="http://localhost:3000/crearmanzana" method="post">
+                <label for="nombre_manzana">Localidad:</label>
+                <input type="text" id="nombre_manzana" name="nombre_manzana" required> 
+                <br>
+                <label for="direccion_manzana">Direccion:</label>
+                <input type="text" id="direccion_manzana" name="direccion_manzana" required>
+                <br>
+                <input type="submit" value="Registrar Manzana"> 
+            </form>
+            
+        </div>
+        <button id="mostrar_manzanas">Mostrar mananas</button>
+            <ul id="lista_manzanas"></ul>
+        <div id="contendor_serviciosr">
+            <h2 id="titulo1">Administrar servicios</h2>
+            <form action="http://localhost:3000/crearservi" method="post">
+                <label for="nombre_servicio">Nombre de servicio:</label>
+                <input type="text" id="nombre_servicio" name="nombre_servicio" required> 
+                <br>
+                <label for="categoria_servicio">Categoria</label>
+                 <select name="categoria_servicio" id="categoria_servicio">
+                     <option value="Aseo">Aseo</option>
+                     <option value="Deporte">Deporte</option>
+                     <option value="Gastronomia">Gastronomia</option>
+                     <option value="Entretenimiento">Entretenimiento</option>
+                     <option value="Maquinaria">Maquinaria</option>
+                 </select>
+                 <br>
+                 <input type="submit" value="Registrar Servicio"> 
+            </form>
+            
+        </div>
+        <button id="mostrar_servicios">Mostrar servicios</button>
+            <ul id="lista_servicios"></ul>
+        <div><button id="eliminar_servicio">Eliminar Servicio</button></div>
+    </div>
+    
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const xhrnombreadmi = new XMLHttpRequest();
+            xhrnombreadmi.open('post','/imprimir-admin',true);
+            xhrnombreadmi.onreadystatechange=function(){
+                    if(xhrnombreadmi.readyState===4){
+                        if(xhrnombreadmi.status === 200){
+                                const usuario = JSON.parse(xhrnombreadmi.responseText);
+                                document.getElementById('administrador').textContent = usuario.nombre;
+                        }
+                        else{
+                            console.error('Error al entrar al servidor');
+                        }
+                }
+                };
+            xhrnombreadmi.send();
+
+
+            const contenedorusuarios = document.getElementById('contenedor_usuarios');
+            const usuariosregis = document.getElementById('usuariosregis');
+            const listausuarios= document.getElementById('lista_usuarios');
+            usuariosregis.addEventListener('click', ()=>{
+                const xhrusuario = new XMLHttpRequest();
+                xhrusuario.open('post','/obtener-usuarios', true);
+                xhrusuario.setRequestHeader('Content-Type', 'application/json');
+                xhrusuario.onreadystatechange=function(){
+                    if(xhrusuario.readyState===4){
+                        if(xhrusuario.status===200){
+                            const data=JSON.parse(xhrusuario.responseText);
+                            listausuarios.innerHTML=data.usuari.map(usuari=>`
+                            <li><label><input type="checkbox" value="${usuari}">${usuari[0]}, ${usuari[1]}, ${usuari[2]}, ${usuari[3]}, ${usuari[4]}</label></li>
+                            `).join('');
+                            contenedorusuarios.style.display='inline';
+
+                        }else{
+                            console.error('error al obtener usuario')
+                        }
+                    }
+                };
+                xhrusuario.send(JSON.stringify());
+            });
+            const btncerrar = document.getElementById('btncerrar');
+        btncerrar.addEventListener('click',()=>{
+            const xhrcerrar = new XMLHttpRequest();
+            xhrcerrar.open('POST','/cerrar-sesion', true);
+            xhrcerrar.onreadystatechange=function(){
+                if(xhrcerrar.readyState===4 && xhrcerrar.status ===200){
+                    window.location.href ='/vistas/index.html';
+                }else{
+                    console.error("Error al cerrar sesion");
+                }
+            }
+            xhrcerrar.send();
+        })
+        window.onload=function(){
+            window.history.forward();
+        };
+        window.onpageshow=function(hola){
+            if(hola.persisted){
+                window.location.reload();
+            }
+        }
+        const mostrarmanzanas = document.getElementById("mostrar_manzanas");
+        const mostrarservicios = document.getElementById("mostrar_servicios");
+        const listamanzanas = document.getElementById("lista_manzanas");
+        const listaservicios = document.getElementById("lista_servicios");
+
+        mostrarmanzanas.addEventListener('click', ()=>{
+                const xhrmanza = new XMLHttpRequest();
+                xhrmanza.open('post','/mostrar_manzanas', true);
+                xhrmanza.setRequestHeader('Content-Type', 'application/json');
+                xhrmanza.onreadystatechange=function(){
+                    if(xhrmanza.readyState===4){
+                        if(xhrmanza.status===200){
+                            const data=JSON.parse(xhrmanza.responseText);
+                            listamanzanas.innerHTML=data.manzas.map(manzas=>`
+                            <li><label><input type="checkbox" value="${manzas}">${manzas[0]}, ${manzas[1]}, ${manzas[2]}</label></li>
+                            `).join('');
+                            contenedorusuarios.style.display='inline';
+
+                        }else{
+                            console.error('error al obtener usuario')
+                        }
+                    }
+                };
+                xhrmanza.send(JSON.stringify());
+            });
+
+            mostrarservicios.addEventListener('click', ()=>{
+                const xhrservis = new XMLHttpRequest();
+                xhrservis.open('post','/mostrar_servicios', true);
+                xhrservis.setRequestHeader('Content-Type', 'application/json');
+                xhrservis.onreadystatechange=function(){
+                    if(xhrservis.readyState===4){
+                        if(xhrservis.status===200){
+                            const data=JSON.parse(xhrservis.responseText);
+                            listaservicios.innerHTML=data.servis.map(servis=>`
+                            <li><label><input type="checkbox" value="${servis}">${servis[0]}, ${servis[1]}, ${servis[2]}, ${servis[3]}</label></li>
+                            `).join('');
+                            contenedorusuarios.style.display='inline';
+
+                        }else{
+                            console.error('error al obtener usuario')
+                        }
+                    }
+                };
+                xhrservis.send(JSON.stringify());
+            });
+            const eliminarservicio = document.getElementById('eliminar_servicio');
+            eliminarservicio.addEventListener('click', async (event)=>{
+                event.preventDefault();
+                const servicios = Array.from(listaservicios.querySelectorAll('li input[type="checkbox"]')).filter(checkbox=>checkbox.checked).map(checkbox=>checkbox.value);
+                const xhreliserv = new XMLHttpRequest();
+                xhreliserv.open('post','/eliminar-servicios-admin', true);
+                xhreliserv.setRequestHeader('Content-Type', 'application/json');
+                xhreliserv.onreadystatechange=function(){
+                    if(xhreliserv.readyState===4){
+                        if(xhreliserv.status===200){
+                            console.log('Solicitud eliminada')
+
+                        }else{
+                            console.error('error al borrar solicitud')
+                        }
+                    }
+                };
+                xhreliserv.send(JSON.stringify({servicios: servicios}));
+            });
+
+    });
+</script>
+</html>

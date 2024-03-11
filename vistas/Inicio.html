@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/Style.css">
+</head>
+
+<body>
+
+        <h1>Ingrese sus datos</h1>
+
+    <div id="contenedor_todo3">
+        <form action="http://localhost:3000/Inicio" method="post">
+            <label id="tipo_documento" for="tipo_documento">Tipo de documento:</label>
+            <select name="tipo_documento" id="tipo_documento" required>
+                <option value="cedula">Cédula de ciudadanía</option>
+                <option value="extranjera">Cédula extranjera</option>
+                <option value="tarjetaidentidad">Tarjeta de identidad</option>
+            </select>
+            <label for="documento">Número de Documento:</label>
+            <input type="text" id="documento" name="documento" required>
+
+            <br>
+
+
+                <a id="regreso" href="index.html">Atras</a>
+                <input type="submit" value="Iniciar Sesión">
+
+
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Color de fondo */
+}
+
+/* Estilos para el encabezado */
+header {
+    background-color: #ffffff; /* Color de fondo del encabezado */
+    padding: 20px;
+    display: flex;
+}
+
+#btn1{
+    margin-left: 1500px;
+    margin-top: 20px;
+}
+#btn2{
+    margin-left: 10px;
+    margin-top: 20px;
+}
+h1{
+    margin-top: 20px;
+    text-align: center;
+}
+.MClog {
+    width: 80px;
+    height: 80px;
+}
+
+
+/* Estilos para los botones */
+input[type="button"] {
+    padding: 10px 20px;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el mouse */
+}
+
+/* Estilos para el contenido principal */
+#todo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+#porto,
+div:nth-child(2) {
+    margin-bottom: 20px;
+}
+.MCPin{
+    margin-top: 200px;
+    width: 600px;
+}
+.MCinf {
+    width: 300px;
+    height: auto;
+}
+
+/* Estilos para el video de fondo */
+.bodizx {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;}
+    
+#contenedor2 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form select, form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#contenedor3 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#regreso {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#regreso:hover {
+    background-color: #555;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button{
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #0056b3;
+}
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#btncerrar {
+
+    margin-left: 20px; /* Ajusta el margen derecho */
+}
+
+/* Estilos para el contenedor principal */
+#contendor_todo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 50vh; /* Ajusta la altura al 100% del viewport */
+    width: 80%;
+    background-color: #dddddd;
+    margin-left: 100px;
+}
+#contendor_todo1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 60vh; /* Ajusta la altura al 100% del viewport */
+    width: 80%;
+    background-color: #dddddd;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+#contendor_todo2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100vh; /* Ajusta la altura al 100% del viewport */
+    width: 80%;
+    background-color: #dddddd;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+#contendor_todo3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100vh; /* Ajusta la altura al 100% del viewport */
+    width: 80%;
+    background-color: #dddddd;
+    margin-left: 100px;
+    margin-top: 20px;
+
+}
+
+/* Estilos para el formulario */
+#contenedor_servicios {
+    text-align: center; /* Centra el contenido del formulario */
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+    display: inline-block; /* Alinea el formulario en línea */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+input[type="datetime-local"],
+button[type="submit"] {
+    margin-top: 10px;
+}
+
+/* Estilos para el contenedor de solicitudes */
+#contendor_solicitudes {
+    text-align: center; /* Centra el contenido del contenedor */
+    margin-top: 20px;
+}
+
+#eliminarsoli {
+    display: inline-block; /* Alinea el botón en línea */
+    padding: 10px 20px;
+    background-color: #dc3545; /* Color rojo para eliminar */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#eliminarsoli:hover {
+    background-color: #c82333; /* Cambio de color al pasar el mouse */
+}
